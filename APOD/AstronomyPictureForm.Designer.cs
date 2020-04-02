@@ -146,8 +146,6 @@
             // apodBackgroundWorker
             // 
             this.apodBackgroundWorker.WorkerSupportsCancellation = true;
-            this.apodBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.apodBackgroundWorker_DoWork);
-            this.apodBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.apodBackgroundWorker_RunWorkerCompleted);
             // 
             // AstronomyPictureForm
             // 
