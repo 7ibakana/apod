@@ -15,10 +15,11 @@ namespace APOD
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: Set the text in the date TextBox to today's date,
-            // formatted as MM/DD/YYYY  
-            DateTime today = DateTime.Today;
-            txtDate.Text = $"{today:d}";
+            dtePictureDate.Value = DateTime.Today;
+            //Set the range of valid dates
+            dtePictureDate.MinDate = new DateTime(1995, 6, 16);
+            dtePictureDate.MaxDate = DateTime.Today;
+            GetAPOD(DateTime.Today);
         }
 
         private void btnGetToday_Click(object sender, EventArgs e)
@@ -31,37 +32,9 @@ namespace APOD
 
         private void btnGetForDate_Click(object sender, EventArgs e)
         {
-            try
-            {
-
-                //TODO: Attempt to convert text in txtDate into a DateTime
-                DateTime date = DateTime.Parse(txtDate.Text);
-
-                //TODO: Make sure the date is today or in the past
-                if (date > DateTime.Today)
-                {
-                    //Throw Format Exception, to be caught in the catch block below
-                    throw new FormatException("Date can't be in the future");
-                }
-
-                //TODO: And make sure date is June 16, 1995 or later, the date APOD service started
-                if (date < new DateTime(1995, 06, 16))
-                {
-                    //Also to be caught by, and handled by, the catch block
-                    throw new FormatException("Date can't be before June 16, 1995");
-                }
-                //TODO: If date is a DateTime and within the allowed date range, 
-                //  request APOD picture for this date 
-                GetAPOD(date);
-            }
-
-            // TODO: show MessageBox error message if date entered is not valid
-            catch (FormatException err)
-            {
-                //This catch block will handle all the different types of error
-                // - Not a date, in the future, before the APOD service started
-                MessageBox.Show(err.Message, "Invalid date");
-            }
+            DateTime date = dtePictureDate.Value;
+            //Fetch Astronomy picture for this date
+            GetAPOD(date);
         }
 
         private void GetAPOD(DateTime date)
@@ -167,7 +140,7 @@ namespace APOD
 
             btnGetForDate.Enabled = enable;
             btnGetToday.Enabled = enable;
-            txtDate.Enabled = enable;
+            dtePictureDate.Enabled = enable;
 
             progressBar.Visible = !enable;   // The opposite of whether the buttons are enabled
         }
